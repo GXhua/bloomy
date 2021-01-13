@@ -116,7 +116,9 @@ bloom_return bloom_add(bloom_t *bloom, const char *data, size_t data_len)
 		return BLOOM_BADARG;
 	}
 
+        //一个data 生成2个hash值
 	bloom_hash(bloom, data, data_len, &hash1, &hash2);
+        //每个data 占用num_hashes个bit
 	for (i = 0; i < bloom->spec.num_hashes; i++) {
 		index = (hash1 + i * hash2) % bloom->spec.filter_size;
 		bloom->filter[index >> BITS_CHAR_SHIFT] |= 1 << (index % BITS_PER_CHAR);

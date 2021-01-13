@@ -1,0 +1,64 @@
+make: 警告：文件“/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/php_bloomy.c”的修改时间在未来 510 秒后
+/bin/bash /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/libtool --mode=compile /usr/bin/gcc  -I. -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy -DPHP_ATOM_INC -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/include -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/main -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -DHAVE_CONFIG_H  -g3 -gdwarf-2   -c /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/php_bloomy.c -o php_bloomy.lo 
+ /usr/bin/gcc -I. -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy -DPHP_ATOM_INC -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/include -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/main -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -DHAVE_CONFIG_H -g3 -gdwarf-2 -c /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/php_bloomy.c  -fPIC -DPIC -o .libs/php_bloomy.o
+/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/php_bloomy.c: In function ‘php_bloom_serialize’:
+/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/php_bloomy.c:312:2: warning: implicit declaration of function ‘smart_str_appendl’; did you mean ‘smart_string_appendl’? [-Wimplicit-function-declaration]
+  smart_str_appendl(&buf, "p:", 2);
+  ^~~~~~~~~~~~~~~~~
+  smart_string_appendl
+/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/php_bloomy.c:313:2: warning: implicit declaration of function ‘smart_str_append_unsigned’; did you mean ‘smart_string_append_unsigned’? [-Wimplicit-function-declaration]
+  smart_str_append_unsigned(&buf, obj->bloom->spec.filter_size);
+  ^~~~~~~~~~~~~~~~~~~~~~~~~
+  smart_string_append_unsigned
+/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/php_bloomy.c:314:2: warning: implicit declaration of function ‘smart_str_appendc’; did you mean ‘smart_string_appendc’? [-Wimplicit-function-declaration]
+  smart_str_appendc(&buf, ',');
+  ^~~~~~~~~~~~~~~~~
+  smart_string_appendc
+/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/php_bloomy.c:331:2: warning: implicit declaration of function ‘INIT_PZVAL’; did you mean ‘ZVAL_ZVAL’? [-Wimplicit-function-declaration]
+  INIT_PZVAL(&value);
+  ^~~~~~~~~~
+  ZVAL_ZVAL
+/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/php_bloomy.c: In function ‘php_bloom_unserialize’:
+/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/php_bloomy.c:422:2: warning: implicit declaration of function ‘ALLOC_INIT_ZVAL’ [-Wimplicit-function-declaration]
+  ALLOC_INIT_ZVAL(value);
+  ^~~~~~~~~~~~~~~
+/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/php_bloomy.c:464:2: warning: implicit declaration of function ‘FREE_ZVAL’; did you mean ‘ZVAL_ZVAL’? [-Wimplicit-function-declaration]
+  FREE_ZVAL(value);
+  ^~~~~~~~~
+  ZVAL_ZVAL
+/bin/bash /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/libtool --mode=compile /usr/bin/gcc  -I. -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy -DPHP_ATOM_INC -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/include -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/main -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -DHAVE_CONFIG_H  -g3 -gdwarf-2   -c /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/bloom.c -o bloom.lo 
+ /usr/bin/gcc -I. -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy -DPHP_ATOM_INC -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/include -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/main -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -DHAVE_CONFIG_H -g3 -gdwarf-2 -c /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/bloom.c  -fPIC -DPIC -o .libs/bloom.o
+/bin/bash /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/libtool --mode=compile /usr/bin/gcc  -I. -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy -DPHP_ATOM_INC -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/include -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/main -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -DHAVE_CONFIG_H  -g3 -gdwarf-2   -c /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/lookup3.c -o lookup3.lo 
+ /usr/bin/gcc -I. -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy -DPHP_ATOM_INC -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/include -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/main -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -DHAVE_CONFIG_H -g3 -gdwarf-2 -c /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/lookup3.c  -fPIC -DPIC -o .libs/lookup3.o
+/bin/bash /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/libtool --mode=link /usr/bin/gcc -DPHP_ATOM_INC -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/include -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/main -I/home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -DHAVE_CONFIG_H  -g3 -gdwarf-2    -o bloomy.la -export-dynamic -avoid-version -prefer-pic -module -rpath /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/modules  php_bloomy.lo bloom.lo lookup3.lo 
+rm -fr  .libs/bloomy.lai
+/usr/bin/gcc -shared  .libs/php_bloomy.o .libs/bloom.o .libs/lookup3.o   -Wl,-soname -Wl,bloomy.so -o .libs/bloomy.so
+creating bloomy.la
+(cd .libs && rm -f bloomy.la && ln -s ../bloomy.la bloomy.la)
+/bin/bash /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/libtool --mode=install cp ./bloomy.la /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/modules
+cp ./.libs/bloomy.so /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/modules/bloomy.so
+cp ./.libs/bloomy.lai /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/modules/bloomy.la
+PATH="$PATH:/sbin" ldconfig -n /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/modules
+----------------------------------------------------------------------
+Libraries have been installed in:
+   /home/guoxinhua/.netbeans/remote/192.168.99.100/guoxinhuademacbook-pro.local-MacOSX-x86_64/Users/guoxinhua/src/bloomy/modules
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the `-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the `LD_LIBRARY_PATH' environment variable
+     during execution
+   - add LIBDIR to the `LD_RUN_PATH' environment variable
+     during linking
+   - use the `-Wl,--rpath -Wl,LIBDIR' linker flag
+   - have your system administrator add LIBDIR to `/etc/ld.so.conf'
+
+See any operating system documentation about shared libraries for
+more information, such as the ld(1) and ld.so(8) manual pages.
+----------------------------------------------------------------------
+
+Build complete.
+Don't forget to run 'make test'.
+
+make: 警告：检测到时钟错误。您的创建可能是不完整的。
