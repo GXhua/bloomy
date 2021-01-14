@@ -179,7 +179,8 @@ bloom_return bloom_calc_optimal(filter_spec_t *spec, size_t num_elements, double
 	num_hashes  = (size_t)opt_h;
 
 	spec->filter_size = filter_size;
-	spec->num_hashes  = num_hashes;
+	spec->num_hashes  = 3;//TODO 这样性能提高一倍，没必要那么多次hash吧
+//        spec->num_hashes  = num_hashes;
 	spec->size_bytes  = filter_size / BITS_PER_CHAR;
 
 	return BLOOM_SUCCESS;
