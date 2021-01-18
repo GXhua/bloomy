@@ -154,6 +154,55 @@ static PHP_METHOD(BloomFilter, __construct)
     }
 
 }
+static PHP_METHOD(BloomFilter, read)
+{
+    char *data = NULL;
+    BLOOM_LEN_TYPE data_len;
+    BLOOM_METHOD_INIT_VARS;
+    bloom_return status;
+
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &data, &data_len) == FAILURE)
+    {
+        return;
+    }
+
+    BLOOM_METHOD_FETCH_OBJECT;
+
+    obj->bloom->salt1 = (*(uint32_t*) data);
+    data += sizeof (uint32_t);
+    obj->bloom->salt2 = (*(uint32_t*) data);
+    data += sizeof (uint32_t);
+    obj->bloom->num_elements = (*(size_t*) data);
+    data += sizeof (size_t);
+
+    memcpy(obj->bloom->filter, data, obj->bloom->spec.size_bytes);
+
+    RETURN_TRUE;
+}
+
+static PHP_METHOD(BloomFilter, write)
+{
+    BLOOM_METHOD_INIT_VARS;
+
+    BLOOM_METHOD_FETCH_OBJECT;
+
+    size_t len = sizeof (obj->bloom->salt1) + sizeof (obj->bloom->salt2) + sizeof (obj->bloom->num_elements) + obj->bloom->spec.size_bytes;
+    
+    char *buf = (char *) emalloc(len);
+    char *start = buf;
+    
+    (*(uint32_t*) buf) = obj->bloom->salt1;
+    buf += sizeof (uint32_t);
+    (*(uint32_t*) buf) = obj->bloom->salt2;
+    buf += sizeof (uint32_t);
+    (*(size_t*) buf) = obj->bloom->num_elements;
+    buf += sizeof (size_t);
+    
+    memcpy(buf, obj->bloom->filter, obj->bloom->spec.size_bytes);
+
+    RETURN_STRINGL(start, len);
+}
+
 /* }}} */
 
 /* {{{ BloomFilter::add(string item)
@@ -304,143 +353,7 @@ zend_object_value php_bloom_new(zend_class_entry *ce TSRMLS_DC)
 #endif
 
 }
-/* }}} */
 
-/* {{{ internal API functions */
-int php_bloom_serialize(zval *object, unsigned char **buffer, size_t *buf_len,
-        zend_serialize_data *data TSRMLS_DC)
-{
-    zval value;
-
-    smart_str buf = {0};
-
-    php_serialize_data_t *var_hash = (php_serialize_data_t *) data;
-    php_bloom_t *obj = Z_BLOOM_P(object);
-
-    smart_str_appendl(&buf, "p:", 2);
-    smart_str_append_unsigned(&buf, obj->bloom->spec.filter_size);
-    smart_str_appendc(&buf, ',');
-    smart_str_append_unsigned(&buf, obj->bloom->spec.size_bytes);
-    smart_str_appendc(&buf, ',');
-    smart_str_append_unsigned(&buf, obj->bloom->spec.num_hashes);
-    smart_str_appendc(&buf, ',');
-    smart_str_append_unsigned(&buf, obj->bloom->num_elements);
-    smart_str_appendc(&buf, ',');
-    smart_str_append_unsigned(&buf, obj->bloom->salt1);
-    smart_str_appendc(&buf, ',');
-    smart_str_append_unsigned(&buf, obj->bloom->salt2);
-    smart_str_appendc(&buf, ';');
-
-    var_hash = emalloc(sizeof (php_serialize_data_t));
-    PHP_VAR_SERIALIZE_INIT(*var_hash);
-
-    ZVAL_DOUBLE(&value, obj->bloom->max_error_rate);
-    php_var_serialize(&buf, &value, var_hash TSRMLS_CC);
-
-    ZVAL_STRINGL(&value, (char*) obj->bloom->filter, obj->bloom->spec.size_bytes);
-    php_var_serialize(&buf, &value, var_hash TSRMLS_CC);
-    *buffer = (unsigned char *) estrndup(buf.s->val, buf.s->len);
-    *buf_len = buf.s->len;
-    zend_string_release(buf.s);
-
-    PHP_VAR_SERIALIZE_DESTROY(*var_hash);
-
-    return SUCCESS;
-}
-
-int php_bloom_unserialize(zval *object, zend_class_entry *ce, const unsigned char *buf,
-        size_t buf_len, zend_unserialize_data *data)
-{
-#define PARSE_NEXT_NUM() \
-        num = (size_t)strtol((const char *)p, &e, 10); \
-        if (num == 0 || errno == ERANGE || (*e != ',' && *e != ';') || (e+1 >= (char *)buf_end)) { \
-                goto err_cleanup; \
-        } \
-        p = (const unsigned char *)++e;
-
-    const unsigned char *p, *buf_end;
-    char *e;
-    long num;
-    zval value;
-    ZVAL_NULL(&value);
-    php_bloom_t *obj;
-    php_unserialize_data_t *var_hash = (php_unserialize_data_t *) data;
-
-    object_init_ex(object, ce);
-    obj = Z_BLOOM_P(object);
-
-    p = buf;
-    buf_end = buf + buf_len;
-
-    obj->bloom = (bloom_t *) emalloc(sizeof (bloom_t));
-    memset(obj->bloom, 0, sizeof (php_bloom_t));
-
-    if (*p != 'p' || *++p != ':')
-    {
-        goto err_cleanup;
-    }
-    ++p;
-
-    PARSE_NEXT_NUM();
-    obj->bloom->spec.filter_size = (size_t) num;
-
-    PARSE_NEXT_NUM();
-    obj->bloom->spec.size_bytes = (size_t) num;
-
-    PARSE_NEXT_NUM();
-    if (num > UCHAR_MAX)
-    {
-        goto err_cleanup;
-    }
-    obj->bloom->spec.num_hashes = (uint8_t) num;
-
-    PARSE_NEXT_NUM();
-    obj->bloom->num_elements = (size_t) num;
-
-    PARSE_NEXT_NUM();
-    obj->bloom->salt1 = (size_t) num;
-
-    PARSE_NEXT_NUM();
-    obj->bloom->salt2 = (size_t) num;
-
-
-    if (!php_var_unserialize(&value, &p, buf_end, var_hash TSRMLS_CC)
-            || Z_TYPE_P(&value) != IS_DOUBLE)
-    {
-        goto err_cleanup;
-    }
-
-    --p; /* for ':' */
-    obj->bloom->max_error_rate = Z_DVAL_P(&value);
-    if (*p != ';')
-    {
-        goto err_cleanup;
-    }
-
-    ++p;
-    if (!php_var_unserialize(&value, &p, buf_end, var_hash TSRMLS_CC)
-            || Z_TYPE_P(&value) != IS_STRING
-            || Z_STRLEN_P(&value) != obj->bloom->spec.size_bytes)
-    {
-        goto err_cleanup;
-    }
-
-    /*
-     * To avoid unnecessarily copying the string, we just point the filter to the
-     * unserialized string and simply free the zval container instead of destroying it
-     * with zval_ptr_dtor().
-     */
-    obj->bloom->filter = (uint8_t *) Z_STRVAL_P(&value);
-    return SUCCESS;
-
-err_cleanup:
-    zval_ptr_dtor(&value);
-    ZVAL_NULL(&value);
-
-    return FAILURE;
-#undef PARSE_NEXT_NUM
-}
-/* }}} */
 
 /* {{{ methods arginfo */
 ZEND_BEGIN_ARG_INFO_EX(arginfo___construct, 0, 0, 1)
@@ -465,6 +378,8 @@ static zend_function_entry bloom_class_methods[] = {
     PHP_ME(BloomFilter, __construct, arginfo___construct, ZEND_ACC_PUBLIC)
     PHP_ME(BloomFilter, add, arginfo_add, ZEND_ACC_PUBLIC)
     PHP_ME(BloomFilter, has, arginfo_has, ZEND_ACC_PUBLIC)
+    PHP_ME(BloomFilter, read, NULL, ZEND_ACC_PUBLIC)
+    PHP_ME(BloomFilter, write, NULL, ZEND_ACC_PUBLIC)
 
     PHP_ME(BloomFilter, getInfo, arginfo_getInfo, ZEND_ACC_PUBLIC)
     { NULL, NULL, NULL}
@@ -495,8 +410,6 @@ PHP_MINIT_FUNCTION(bloomy)
     INIT_CLASS_ENTRY(ce, "BloomFilter", bloom_class_methods);
     bloom_ce = zend_register_internal_class(&ce TSRMLS_CC);
     bloom_ce->create_object = php_bloom_new;
-    bloom_ce->serialize = php_bloom_serialize;
-    bloom_ce->unserialize = php_bloom_unserialize;
 
     memcpy(&bloom_object_handlers, zend_get_std_object_handlers(), sizeof (zend_object_handlers));
 
