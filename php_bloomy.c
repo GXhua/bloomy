@@ -188,7 +188,7 @@ static PHP_METHOD(BloomFilter, write)
 
     size_t len = sizeof (obj->bloom->salt1) + sizeof (obj->bloom->salt2) + sizeof (obj->bloom->num_elements) + obj->bloom->spec.size_bytes;
     
-    char *buf = (char *) emalloc(len);
+    char *buf = (char *) malloc(len);
     char *start = buf;
     
     (*(uint32_t*) buf) = obj->bloom->salt1;
@@ -201,6 +201,8 @@ static PHP_METHOD(BloomFilter, write)
     memcpy(buf, obj->bloom->filter, obj->bloom->spec.size_bytes);
 
     RETURN_STRINGL(start, len);
+    
+    free(start);
 }
 
 /* }}} */
